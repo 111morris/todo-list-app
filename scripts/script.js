@@ -1,4 +1,4 @@
-window.addEventListener('load', () => {
+/* window.addEventListener('load', () => {
  const form = document.querySelector("#new-task-form");
  const input = document.querySelector("#new-task-input");
  const list_element = document.querySelector("#tasks");
@@ -62,54 +62,65 @@ window.addEventListener('load', () => {
    }
   });
  });
+ 
+
+}); */
+/* algorithim  */
+
+window.addEventListener('load', () => {
+
+
+  let tasksList = [];
+  const input = document.querySelector('#new-task-input');
+  const form = document.querySelector('#new-task-form');
+  const edit = document.querySelector(".js-edit");
+  let tasks = document.querySelector('#tasks');
+  getItems();
+  let tasksListHTML = '';
+
+  function saveToStorage() {
+    localStorage.setItem('tasksList', JSON.stringify(tasksList))
+  }
+
+  function getItems() {
+    const savedTasks = localStorage.getItem('tasksList');
+    if (savedTasks) {
+      tasksList = JSON.parse(savedTasks);
+      renderTaskslist();
+    }
+  };
+
+  function renderTaskslist() {
+    tasks.innerHTML = '';
+    tasksList.forEach((task, index) => {
+      tasksListHTML += `
+      <div class="task">
+      <div class="content">
+        <input type="text" name="" id="" class="text" value="${task}" readonly>
+      </div>
+      <div class="actions">
+        <button class="edit js-edit">Edit</button>
+        <button class="delete">Delete</button>
+      </div>
+      </div>
+   `;
+    });
+  };
+
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const task = input.value.trim();
+    tasksList.push(task)
+    renderTaskslist();
+    saveToStorage();
+    // tasks.innerHTML = tasksListHTML;
+    input.value = '';
+    // tasksListHTML = '';
+  });
+/* unfinished work */
 
 });
 
-// my script
-
-// window.addEventListener('load', () => {
-//  let tasksList = [];
-//  const input = document.querySelector('#new-task-input');
-//  const form = document.querySelector('#new-task-form');
-//  const edit = document.querySelector(".js-edit");
-//  let tasks = document.querySelector('#tasks');
-//  let tasksListHTML = '';
 
 
-// /*   function saveToStorage() {
-//    localStorage.setItem('lists', JSON.stringify(tasksList))
-//   } */
-
-//  function renderTaskslist() {
-//  tasksList.forEach((element) => {
-//   return tasksListHTML += `
-//    <div class="task">
-//      <div class="content">
-//       <input type="text" name="" id="" class="text" value="${element}" readonly>
-//      </div>
-//      <div class="actions">
-//       <button class="edit js-edit">Edit</button>
-//       <button class="delete">Delete</button>
-//      </div>
-//     </div>
-//    `;
-//   });
-//  };
-
-
-//  form.addEventListener('submit', (e) => {
-//   e.preventDefault();
-//   const task = input.value;
-//   tasksList.push(task)
-//   renderTaskslist()
-//   tasks.innerHTML = tasksListHTML;
-//   input.value = '';
-//   tasksListHTML = '';
-//  });
-
-//  edit.addEventListener('click', () => {
-
-//   console.log('helllo there');
-//  });
-
-// });
